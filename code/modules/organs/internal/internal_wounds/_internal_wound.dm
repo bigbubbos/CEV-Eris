@@ -67,10 +67,10 @@
 
 /datum/component/internal_wound/Process(delta_time)
 	var/obj/item/organ/O = parent
-	var/obj/item/organ/external/E = O.parent
-	var/mob/living/carbon/human/H = O.owner
+	var/obj/item/organ/external/E = parent ? O.parent : null
+	var/mob/living/carbon/human/H = parent ? O.owner : null
 
-	if(O.status & ORGAN_DEAD)
+	if(!parent || O.status & ORGAN_DEAD)
 		SSinternal_wounds.processing -= src
 		return
 
