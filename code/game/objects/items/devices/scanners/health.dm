@@ -184,8 +184,6 @@
 						dat += SPAN_WARNING("Unsecured fracture in subject [E.get_bone()]. Splinting recommended for transport.")
 					else
 						foundUnlocatedFracture = TRUE
-			if(E.has_infected_wound())
-				dat += SPAN_WARNING("Infected wound detected in subject [E]. Disinfection recommended.")
 
 		if(foundUnlocatedFracture)
 			dat += SPAN_WARNING("Bone fractures detected. Advanced scanner required for location.")
@@ -196,6 +194,16 @@
 			for(var/datum/wound/W in e.wounds) if(W.internal)
 				dat += text(SPAN_WARNING("Internal bleeding detected. Advanced scanner required for location."))
 				break
+			var/internal_wound_severity = e.number_internal_wounds
+			if(!internal_wound_severity)
+				continue
+			if(internal_wound_severity < 3)
+				dat += text(SPAN_WARNING("Light internal damage detected in \the [e]. Advanced scanner required for location. Treatment recommended."))
+			else if(internal_wound_severity < 7)
+				dat += text(SPAN_WARNING("Moderate internal damage detected \the [e]. Advanced scanner required for location. Treatment recommended."))
+			else
+				dat += text(SPAN_WARNING("Severe internal damage detected \the [e]. Advanced scanner required for location. Immediate treatment recommended."))
+
 		if(H.vessel)
 			var/blood_volume = H.vessel.get_reagent_amount("blood")
 			var/blood_percent =  round((blood_volume / H.species.blood_volume)*100)

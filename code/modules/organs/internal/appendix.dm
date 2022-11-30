@@ -22,12 +22,11 @@
 			owner.emote("me",1,"winces slightly.")
 		if(inflamed > 200)
 			if(prob(3))
-				take_damage(0.1)
+				take_damage(10, BRUTE)
 				owner.emote("me",1,"winces painfully.")
 				owner.adjustToxLoss(1)
 		if(inflamed > 400)
 			if(prob(1))
-				germ_level += rand(2,6)
 				if (owner.nutrition > 100)
 					owner.vomit()
 				else
